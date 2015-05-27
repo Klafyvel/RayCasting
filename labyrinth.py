@@ -1,6 +1,9 @@
 #! /usr/bin/python3
 import math
 import random
+
+from blocks import *
+
 # mur ouvert :
 #     BIT0 : gauche
 #     BIT1 : droite
@@ -85,3 +88,13 @@ def fusion_laby(size):
                 returned_map[impacted_y][impacted_x] |= 0b0100
         same = is_same(work_map)
     return returned_map
+
+def to_ray_map(lab):
+    returned = [wall((0,0,0))]*len(lab)
+    n = []
+    for i in lab:
+        r = list(n)
+        n = [wall(0,0,0)]
+        for j in i:
+            r.append(j)
+            r.append()

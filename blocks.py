@@ -1,8 +1,8 @@
 #! /usr/bin/python3
 
-BLOCK_WIDTH = 100
-BLOCK_HEIGHT = 100
-BLOCK_THICKNESS = 100
+BLOCK_WIDTH = 64
+BLOCK_HEIGHT = 64
+BLOCK_THICKNESS = 64
 
 EMPTY = (0,0)
 wall = lambda c : (1,c) 
