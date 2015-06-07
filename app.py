@@ -24,6 +24,7 @@ class App:
 
     def __init__(self):
         self.window = pygame.display.set_mode((0, 0), FULLSCREEN)
+        pygame.mouse.set_visible(False)
         pygame.key.set_repeat(5, 5)
         self.player = Player((BLOCK_WIDTH * 1.5, BLOCK_WIDTH * 1.5), 277)
         self.engine = RayCastEngine(self.player, laby((30, 30)))
@@ -72,7 +73,7 @@ class App:
         self.window.blit(self.font.render(
             "distance camera : " + str(self.player.dist_cam), False, (255, 255, 255)), (0, 30))
         self.window.blit(self.font.render(
-            "position : " + str((self.player.x, self.player.y)), False, (255, 255, 255)), (0, 60))
+            "position : " + str((int(self.player.x), int(self.player.y))), False, (255, 255, 255)), (0, 60))
         self.window.blit(self.font.render(
             "largeur colonne : " + str(self.engine.column_width) + " px", False, (255, 255, 255)), (0, 90))
         if self.engine.fish_eye:
