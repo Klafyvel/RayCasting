@@ -16,6 +16,7 @@ class RayCastEngine:
         self.screen_width, self.screen_height = (0, 0)
         self.player = player
         self.fish_eye = False
+        self.column_width = 4
         if floor:
             self.floor = pygame.image.load(floor).convert()
         else:
@@ -73,7 +74,7 @@ class RayCastEngine:
         self.screen_width, self.screen_height = target.get_width(), target.get_height()
         f = self.create_screen_func()
         # print(self.screen_width)
-        for k in range(1, self.screen_width + 1):
+        for k in range(1, self.screen_width + 1, self.column_width):
             x_cam, y_cam = f(k/self.screen_width)
             p = self.get_obstacle_in_direction(
                 (self.player.x, self.player.y), (x_cam, y_cam))
@@ -82,9 +83,13 @@ class RayCastEngine:
                 i, j = int(
                     modf(x / BLOCK_WIDTH)[1]), int(modf(y / BLOCK_HEIGHT)[1])
                 height = self.calc_column_height((x, y))
+                if not self.fish_eye:
+                    x_base, y_base = self.player.camera_vector()
+                    c = ((x_cam - self.player.x) * x_base + (y_cam - self.player.y) * y_base) / (norm(x_base, y_base) * norm((x_cam - self.player.x), (y_cam - self.player.y)))
+                    height /= c
 
                 pygame.draw.rect(target, self.world[j][i][1],
-                                 (k, (self.screen_height - height) / 2, 1, height))
+                                 (k, (self.screen_height - height) / 2, self.column_width, height))
 
 
 class Player:
