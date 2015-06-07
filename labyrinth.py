@@ -44,14 +44,6 @@ def fusion(work_map, cell_type_a, cell_type_b):
             if work_map[i][j] == old_val:
                 work_map[i][j] = new_val
     return True
-def to_good_map(m):
-    r = []
-    for x in m:
-        t=[]
-        for y in x:
-            t.append(CODE.index(y))
-        r.append(t)
-    return list(r)
 
 def fusion_laby(size):
     w,h = size
@@ -90,11 +82,30 @@ def fusion_laby(size):
     return returned_map
 
 def to_ray_map(lab):
-    returned = [wall((0,0,0))]*len(lab)
-    n = []
+    returned = [[wall((255,255,0))]*(len(lab)*2+2)]
     for i in lab:
-        r = list(n)
-        n = [wall(0,0,0)]
+        r = [wall((255,255,0))]
+        n = [wall((255,255,0))]
         for j in i:
-            r.append(j)
-            r.append()
+            r.append(EMPTY)
+            if not j & 0b0010 :
+                r.append(wall((random.randint(0,255), random.randint(0,255), random.randint(0,255))))
+            else :
+                r.append(EMPTY)
+            if not j & 0b1000:
+                n.append(wall((random.randint(0,255), random.randint(0,255), random.randint(0,255))))
+            else:
+                n.append(EMPTY)
+            if n[-1] and r[-1]:
+                n.append(EMPTY)
+            else:
+                n.append(wall((random.randint(0,255), random.randint(0,255), random.randint(0,255))))
+        r.append(wall((255,255,0)))
+        n.append(wall((255,255,0)))
+        returned.append(r)
+        returned.append(n)
+    returned.append([[wall((255,255,0))]*(len(lab)*2+2)])
+    return returned
+
+def laby(size):
+    return to_ray_map(fusion_laby(size))
